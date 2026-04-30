@@ -1,0 +1,99 @@
+site_name: Chakraview AI Dev Model
+site_description: >
+  A 6-persona framework for human-AI collaborative software development —
+  where humans define correctness and AI agents handle volume.
+repo_name: naren-chakraview/chakraview-ai-dev-model
+repo_url: https://github.com/naren-chakraview/chakraview-ai-dev-model
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: cyan
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: cyan
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+  font:
+    text: Inter
+    code: JetBrains Mono
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.code.annotate
+    - content.code.copy
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      title: On this page
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+plugins:
+  - search:
+      lang: en
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/naren-chakraview
+  generator: false
+
+nav:
+  - Home: index.md
+  - Model: model.md
+  - Personas:
+    - personas/index.md
+    - "1 — Human Domain Expert": personas/persona-1-human-domain-expert.md
+    - "2 — Documentation Agent": personas/persona-2-documentation-agent.md
+    - "3 — Script Authoring Agent": personas/persona-3-script-authoring-agent.md
+    - "4 — Script Executor": personas/persona-4-script-executor.md
+    - "5 — Implementation Agent": personas/persona-5-implementation-agent.md
+    - "6 — Compliance Agent": personas/persona-6-compliance-agent.md
+  - Mechanism:
+    - mechanism/index.md
+    - Contracts: mechanism/contracts.md
+    - Agent vs Script: mechanism/agent-vs-script.md
+    - Guardrails: mechanism/guardrails.md
+  - Workflow: workflow/index.md
+  - Task Specs: task-specs/index.md
+  - Case Studies: case-studies/index.md
