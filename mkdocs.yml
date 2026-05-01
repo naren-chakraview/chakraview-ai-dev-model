@@ -2,6 +2,7 @@ site_name: Chakraview AI Dev Model
 site_description: >
   A 6-persona framework for human-AI collaborative software development —
   where humans define correctness and AI agents handle volume.
+site_url: https://naren-chakraview.github.io/chakraview-ai-dev-model/
 repo_name: naren-chakraview/chakraview-ai-dev-model
 repo_url: https://github.com/naren-chakraview/chakraview-ai-dev-model
 edit_uri: edit/main/docs/
