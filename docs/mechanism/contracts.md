@@ -40,40 +40,14 @@ Agents consume contracts to produce implementation artifacts. Every agent output
 
 ## The Contract → Implementation Flow
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                    HUMAN LAYER                          │
-│                                                         │
-│  contracts/slas/{service}-sla.yaml                      │
-│  ┌─────────────────────────────────┐                    │
-│  │ availability: 99.95%            │                    │
-│  │ latency_p99_ms: 500             │                    │
-│  │ throughput_rps: 1000            │                    │
-│  └─────────────────────────────────┘                    │
-│                   +                                     │
-│  contracts/domain-invariants/{service}-invariants.md    │
-│  contracts/event-schemas/{EventName}.json               │
-│  docs/ddd/{service}/domain-model.md                     │
-└──────────────────────┬──────────────────────────────────┘
-                       │  consumed by
-                       ▼
-┌─────────────────────────────────────────────────────────┐
-│                   AGENT LAYER                           │
-│                                                         │
-│  ai-agents/tasks/agent/implement-{service}.md           │
-│  ai-agents/context/coding-standards.md                  │
-│  ai-agents/context/observability-requirements.md        │
-└──────────────────────┬──────────────────────────────────┘
-                       │  produces
-                       ▼
-┌─────────────────────────────────────────────────────────┐
-│                 IMPLEMENTATION LAYER                    │
-│                                                         │
-│  services/{service}/src/domain/                         │
-│  services/{service}/src/domain/events/                  │
-│  services/{service}/src/infrastructure/OtelInstrumentation│
-│                                                         │
-│  observability/slos/{service}-slo.yaml                  │
-│  observability/alerts/{service}-burnrate.yaml           │
-└─────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    H["HUMAN LAYER<br/><br/>contracts/slas/&lt;service&gt;-sla.yaml<br/>availability: 99.95% · latency_p99_ms: 500 · throughput_rps: 1000<br/><br/>contracts/domain-invariants/&lt;service&gt;-invariants.md<br/>contracts/event-schemas/&lt;EventName&gt;.json<br/>docs/ddd/&lt;service&gt;/domain-model.md"]
+
+    A["AGENT LAYER<br/><br/>ai-agents/tasks/agent/implement-&lt;service&gt;.md<br/>ai-agents/context/coding-standards.md<br/>ai-agents/context/observability-requirements.md"]
+
+    I["IMPLEMENTATION LAYER<br/><br/>services/&lt;service&gt;/src/domain/<br/>services/&lt;service&gt;/src/domain/events/<br/>services/&lt;service&gt;/src/infrastructure/OtelInstrumentation<br/><br/>observability/slos/&lt;service&gt;-slo.yaml<br/>observability/alerts/&lt;service&gt;-burnrate.yaml"]
+
+    H -- "consumed by" --> A
+    A -- "produces" --> I
 ```

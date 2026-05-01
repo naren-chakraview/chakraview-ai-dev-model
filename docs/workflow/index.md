@@ -13,256 +13,63 @@ Full Intake/Triage documentation: [Intake/Triage](../intake/index.md)
 
 ---
 
-```
-┌─────────────────────────────────────────────────────────────────────────┐
-│ INTAKE / TRIAGE  ← all business intent enters here                      │
-│                                                                         │
-│  Input: user story, feature brief, incident report, market signal       │
-│                                                                         │
-│  Round 1: [6 Compliance Agent] + [5 Implementation Agent]               │
-│    Challenge: ADR conflicts, bounded context, feasibility,              │
-│    state ownership, pattern decisions, edge cases                       │
-│                                                                         │
-│  Round 2: [2 Documentation Agent] + [3 Script Authoring Agent]          │
-│    Challenge: ubiquitous language, ADR scope, scriptability,            │
-│    validation needs, generation targets                                 │
-│                                                                         │
-│  Output: Intake Report + Draft Contracts + Triage Decision              │
-│                                                                         │
-│  Triage routes to entry point:                                          │
-│    New feature / service ──────────────────────────────→ Phase 0       │
-│    Contract patch (no dialogue) ──────────────────────→ Phase 0        │
-│    Observability gap ─────────────────────────────────→ Phase 2        │
-│    Infra / CI change ─────────────────────────────────→ Phase 4        │
-│    Implementation patch ──────────────────────────────→ Phase 5        │
-│                                                                         │
-│  See: docs/intake/index.md                                              │
-└──────────────────────────────┬──────────────────────────────────────────┘
-                               ↓
-┌─────────────────────────────────────────────────────────────────────────┐
-│ PHASE 0: Bootstrap                                                      │
-│                                                                         │
-│  [1 Human Expert] writes:                                               │
-│    contracts/slas/*.yaml                                                │
-│    contracts/domain-invariants/*.md                                     │
-│    contracts/event-schemas/*.json                                       │
-│    tooling/service-manifest.yaml                                        │
-│    ai-agents/tasks/ (agent/ and script/ specs)                          │
-│                                                                         │
-│  [3 Script Authoring Agent] writes:                                     │
-│    tooling/validate-contracts.sh   ← from tasks/script/validate         │
-│                                                                         │
-│  [4 Script Executor] runs:                                              │
-│    validate-contracts.sh → baseline pass                                │
-└──────────────────────────────┬──────────────────────────────────────────┘
-                               ↓
-┌─────────────────────────────────────────────────────────────────────────┐
-│ PHASE 1: Architecture Foundation                                        │
-│                                                                         │
-│  [1 Human Expert] writes:                                               │
-│    docs/adrs/ stubs (context + decision — the "why")                   │
-│    docs/ddd/bounded-contexts.md, ubiquitous-language.md                │
-│                                                                         │
-│  [2 Documentation Agent] produces:                                      │
-│    Full ADRs (rationale, consequences, alternatives)                    │
-│    docs/ddd/*/domain-model.md                                           │
-│    docs/ddd/*/state-machine.md                                          │
-│                                                                         │
-│  ← Human Review: ADRs correctly capture the decisions?                  │
-│    Domain models faithfully express the invariants?                     │
-└──────────────────────────────┬──────────────────────────────────────────┘
-                               ↓
-┌─────────────────────────────────────────────────────────────────────────┐
-│ PHASE 2: Contract → Observability (scripted)                           │
-│                                                                         │
-│  [3 Script Authoring Agent] writes:                                     │
-│    tooling/generate-{artifact}.py                                       │
-│                                                                         │
-│  [4 Script Executor] runs:                                              │
-│    generate-{artifact}.py                                               │
-│      → observability/slos/*.yaml                                        │
-│      → observability/alerts/*-burnrate.yaml                             │
-│    validate-contracts.sh → SLA↔SLO↔alert chain verified               │
-│                                                                         │
-│  ← Human Review: alert thresholds reflect SLA intent?                  │
-└──────────────────────────────┬──────────────────────────────────────────┘
-                               ↓
-┌─────────────────────────────────────────────────────────────────────────┐
-│ PHASE 3: Contract → API Contracts                                       │
-│                                                                         │
-│  [2 Documentation Agent] produces:                                      │
-│    api/openapi/*.yaml (from domain models + invariants)                 │
-│    api/asyncapi/*.yaml (from event schemas)                             │
-│                                                                         │
-│  ← Human Review: API contracts match domain model?                      │
-│    Breaking-change rules clear?                                         │
-└──────────────────────────────┬──────────────────────────────────────────┘
-                               ↓
-┌─────────────────────────────────────────────────────────────────────────┐
-│ PHASE 4: Contract → Infrastructure                                      │
-│                                                                         │
-│  [3 Script Authoring Agent] writes:                                     │
-│    tooling/generate-helm-boilerplate.sh                                 │
-│    tooling/generate-ci-workflow.sh                                      │
-│    tooling/generate-codeowners.py                                       │
-│                                                                         │
-│  [4 Script Executor] runs → produces:                                   │
-│    infrastructure/helm/charts/{service}/                                │
-│    .github/workflows/ci-{service}.yml                                   │
-│    CODEOWNERS                                                           │
-│                                                                         │
-│  *** [6 Architectural Compliance Agent] reviews generated infra:        │
-│    Reads: docs/adrs/ + principles.md + generated artifacts              │
-│    Output: ai-agents/reviews/infra-compliance-{service}-{date}.md       │
-│                                                                         │
-│    PASS → proceed                                                       │
-│    DEVIATION — intentional:                                             │
-│      [1 Human Expert] writes/amends ADR                                 │
-│      [6 Compliance Agent] second pass (scoped to deviation only)        │
-│        PASS → proceed                                                   │
-│        FAIL → repeat ADR cycle                                          │
-│    DEVIATION — unintentional:                                           │
-│      [3+4] Script Authoring Agent + Executor re-run                     │
-│            with compliance report as additional context                 │
-│      → loop back to compliance check                                    │
-└──────────────────────────────┬──────────────────────────────────────────┘
-                               ↓
-┌─────────────────────────────────────────────────────────────────────────┐
-│ PHASE 5: Contract → Service Implementation                              │
-│                                                                         │
-│  [5 Service Implementation Agent] reads:                                │
-│    contracts/ + docs/ddd/ + api/openapi/ + ai-agents/context/           │
-│  produces:                                                              │
-│    services/*/src/domain/                                               │
-│    services/*/src/application/                                          │
-│    services/*/src/infrastructure/                                       │
-│    services/*/tests/domain/                                             │
-│                                                                         │
-│  [4 Script Executor] runs:                                              │
-│    validate-contracts.sh → event classes match schemas ✓                │
-│                                                                         │
-│  *** [6 Architectural Compliance Agent] reviews implementation:         │
-│    Reads: docs/adrs/ + contracts/ + ai-agents/context/ + services/src   │
-│    Output: ai-agents/reviews/impl-compliance-{service}-{date}.md        │
-│                                                                         │
-│    PASS → Human Review gate                                             │
-│    DEVIATION — intentional:                                             │
-│      [1 Human Expert] writes/amends ADR                                 │
-│      [6 Compliance Agent] second pass (scoped to deviation only)        │
-│        PASS → Human Review gate                                         │
-│        FAIL → repeat ADR cycle                                          │
-│    DEVIATION — unintentional:                                           │
-│      [5 Implementation Agent] re-runs with compliance report            │
-│      → loop back to compliance check                                    │
-│                                                                         │
-│  ← Human Review: does code express every invariant by ID?               │
-│    Does OtelInstrumentation register correct names and buckets?         │
-└──────────────────────────────┬──────────────────────────────────────────┘
-                               ↓
-┌─────────────────────────────────────────────────────────────────────────┐
-│ PHASE 6: Migration + Operations Documentation                           │
-│                                                                         │
-│  [2 Documentation Agent] produces:                                      │
-│    docs/migration/ (strategy, phase docs, rollback playbook)            │
-│    docs/runbooks/ (one per failure mode referenced in SLA)              │
-│                                                                         │
-│  ← Human Review: rollback gates tied to measurable alert signals?       │
-│    Does each runbook reference the correct alert name?                  │
-└──────────────────────────────┬──────────────────────────────────────────┘
-                               ↓
-┌─────────────────────────────────────────────────────────────────────────┐
-│ PHASE 7: Continuous — Contract Change                                   │
-│                                                                         │
-│  [1 Human Expert] modifies a contract file (PR with sign-off)           │
-│  [4 Script Executor] validate-contracts.sh → detects gap                │
-│                                                                         │
-│  Gap type determines which persona re-runs:                             │
-│                                                                         │
-│  SLA target changed:                                                    │
-│    → [4] re-runs generate-{artifact}.py                                 │
-│    → [6] compliance check on updated alerts only                        │
-│                                                                         │
-│  Domain invariant changed:                                              │
-│    → [5] Implementation Agent re-runs for affected service              │
-│    → [4] validate-contracts.sh                                          │
-│    → [6] impl compliance check                                          │
-│                                                                         │
-│  Event schema changed (additive):                                       │
-│    → [5] Implementation Agent updates typed event class                 │
-│    → [2] Documentation Agent updates asyncapi spec                      │
-│    → [4] validate-contracts.sh                                          │
-│                                                                         │
-│  Event schema changed (breaking — new required field):                  │
-│    → [1 Human Expert] must write migration ADR first                    │
-│    → then follows event schema changed (additive) path above            │
-└──────────────────────────────┬──────────────────────────────────────────┘
-                               ↓
-┌─────────────────────────────────────────────────────────────────────────┐
-│ PHASE 7b: Continuous — New Bounded Context                              │
-│                                                                         │
-│  Trigger: team decides a new business domain warrants its own           │
-│  bounded context (not an extension of an existing one).                 │
-│                                                                         │
-│  This is a larger workflow than a contract change.                      │
-│  It starts with a mandatory architectural review before any             │
-│  implementation persona is invoked.                                     │
-│                                                                         │
-│  Step 1 — Context Boundary Decision (human-only gate):                  │
-│    [1 Human Expert] authors:                                            │
-│      docs/ddd/bounded-contexts.md update (add new context)             │
-│      docs/ddd/{new-context}/ubiquitous-language.md                      │
-│      ADR stub: why this is a new context, not an extension              │
-│                                                                         │
-│    [6 Architectural Compliance Agent] reviews context map update:       │
-│      Does the new context create unintended coupling                    │
-│        with existing contexts?                                          │
-│      Does it introduce a shared-DB risk? (shared-database ADR)         │
-│      Is the integration pattern (event, ACL, partnership)               │
-│        explicitly defined?                                              │
-│      Output: ai-agents/reviews/context-boundary-{name}-{date}.md       │
-│                                                                         │
-│      PASS → proceed to Step 2                                           │
-│      DEVIATION → [1] Human Expert revises context map; repeat           │
-│                                                                         │
-│  Step 2 — Contracts (same as Phase 0, scoped to new context):          │
-│    [1 Human Expert] writes:                                             │
-│      contracts/slas/{service}-sla.yaml                                  │
-│      contracts/domain-invariants/{new-context}-invariants.md            │
-│      contracts/event-schemas/{NewEvent}.json                            │
-│      tooling/service-manifest.yaml update (add new service entry)       │
-│      ai-agents/tasks/ specs for new context                             │
-│                                                                         │
-│  Step 3 — Architecture Foundation (same as Phase 1):                   │
-│    [2 Documentation Agent] produces full ADR for new context            │
-│    [2 Documentation Agent] produces domain-model.md, state-machine.md  │
-│    ← Human Review                                                       │
-│                                                                         │
-│  Step 4 — Observability + API (same as Phases 2–3):                    │
-│    [3+4] generate SLOs, alerts for new context                          │
-│    [2] produce OpenAPI + AsyncAPI specs                                 │
-│                                                                         │
-│  Step 5 — Infrastructure (same as Phase 4 + compliance check):         │
-│    [3+4] generate Helm chart, CI pipeline, update CODEOWNERS            │
-│    [6] infra compliance check against full ADR set                      │
-│         (includes cross-context coupling checks)                        │
-│                                                                         │
-│  Step 6 — Implementation (same as Phase 5 + compliance check):         │
-│    [5] Implementation Agent for new service                             │
-│    [6] impl compliance check (cross-context import check is critical)   │
-│                                                                         │
-│  Step 7 — Migration phase doc (if extracted from monolith):             │
-│    [2] Documentation Agent writes migration phase doc                   │
-│    ← Human Review: extraction order correct? rollback gate defined?     │
-└──────────────────────────────┬──────────────────────────────────────────┘
-                               ↓
-┌─────────────────────────────────────────────────────────────────────────┐
-│ FEEDBACK ARC → signals re-enter as new Business Intent at INTAKE        │
-│                                                                         │
-│  SLA breach alert           → "Invariant gap" intent  → Intake Round 1  │
-│  Contract change detected   → direct entry            → Phase 0         │
-│  New bounded context        → full intake dialogue    → Phase 0         │
-│  Compliance review failure  → "ADR amendment needed"  → Intake Round 1  │
-│                                                                         │
-│  ↑ loop back to INTAKE / TRIAGE at top                                  │
-└─────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    INTAKE["INTAKE / TRIAGE — all business intent enters here<br/><br/>Input: user story · feature brief · incident report · market signal<br/><br/>Round 1: [6] Compliance Agent + [5] Implementation Agent<br/>Challenge: ADR conflicts · bounded context · edge cases · state ownership<br/><br/>Round 2: [2] Documentation Agent + [3] Script Authoring Agent<br/>Challenge: ubiquitous language · ADR scope · scriptability<br/><br/>Output: Intake Report · Draft Contracts · Triage Decision<br/><br/>See: docs/intake/index.md"]
+
+    P0["Phase 0 — Bootstrap<br/><br/>[1] Human Expert: contracts/slas · domain-invariants · event-schemas<br/>tooling/service-manifest.yaml · ai-agents/tasks/ specs<br/>[3] Script Authoring: validate-contracts.sh<br/>[4] Script Executor: baseline validation pass"]
+
+    P1["Phase 1 — Architecture Foundation<br/><br/>[1] Human Expert: ADR stubs · bounded-contexts.md · ubiquitous-language.md<br/>[2] Documentation Agent: full ADRs · domain-model.md · state-machine.md<br/>← Human Review: ADRs correct? Domain models match invariants?"]
+
+    P2["Phase 2 — Contract → Observability<br/><br/>[3] Script Authoring: generate-artifact.py<br/>[4] Script Executor: slos/*.yaml · alerts/*-burnrate.yaml<br/>validate-contracts.sh → SLA↔SLO↔alert chain verified<br/>← Human Review: thresholds reflect SLA intent?"]
+
+    P3["Phase 3 — Contract → API Contracts<br/><br/>[2] Documentation Agent: api/openapi/*.yaml · api/asyncapi/*.yaml<br/>← Human Review: API matches domain model? Breaking-change rules clear?"]
+
+    P4["Phase 4 — Contract → Infrastructure<br/><br/>[3] Script Authoring: generate-helm-boilerplate.sh · generate-ci-workflow.sh<br/>[4] Script Executor: Helm charts · CI workflows · CODEOWNERS<br/>[6] Compliance Agent reviews generated infra<br/>Output: ai-agents/reviews/infra-compliance-service-date.md"]
+
+    P4C{Compliance?}
+
+    P4ADR["[1] Human Expert writes/amends ADR<br/>[6] Compliance Agent: second pass scoped to deviation"]
+
+    P4FIX["[3+4] Re-run scripts with compliance report as context"]
+
+    P5["Phase 5 — Contract → Service Implementation<br/><br/>[5] Implementation Agent: domain · application · infrastructure layers<br/>Reads: contracts/ · docs/ddd/ · api/openapi/ · ai-agents/context/<br/>[4] validate-contracts.sh → event classes match schemas<br/>[6] Compliance Agent reviews implementation<br/>Output: ai-agents/reviews/impl-compliance-service-date.md<br/>← Human Review: invariants enforced? OTEL names/buckets correct?"]
+
+    P5C{Compliance?}
+
+    P5ADR["[1] Human Expert writes/amends ADR<br/>[6] Compliance Agent: second pass scoped to deviation"]
+
+    P5FIX["[5] Implementation Agent re-runs with compliance report"]
+
+    P6["Phase 6 — Migration + Operations Documentation<br/><br/>[2] Documentation Agent: docs/migration/ · docs/runbooks/<br/>← Human Review: rollback gates tied to alerts? Runbooks reference correct alert names?"]
+
+    P7["Phase 7 — Continuous: Contract Change<br/><br/>SLA changed → [4] re-generate alerts · [6] compliance check<br/>Invariant changed → [5] re-implement · [4] validate · [6] check<br/>Schema additive → [5] update event class · [2] update asyncapi<br/>Schema breaking → [1] ADR first · then additive path"]
+
+    P7B["Phase 7b — Continuous: New Bounded Context<br/><br/>Step 1: [1] Context boundary decision + ADR stub<br/>         [6] Coupling review · shared-DB check · integration pattern<br/>Steps 2–7: Contracts → Architecture → Observability → API<br/>            → Infrastructure → Implementation → Migration doc"]
+
+    FEEDBACK["FEEDBACK ARC — signals re-enter as new business intent<br/><br/>SLA breach alert → Intake Round 1<br/>Contract change detected → Phase 0 direct<br/>New bounded context → full intake dialogue<br/>Compliance review failure → Intake Round 1"]
+
+    INTAKE -->|New feature / service| P0
+    INTAKE -.->|Observability gap| P2
+    INTAKE -.->|Infra / CI change| P4
+    INTAKE -.->|Implementation patch| P5
+
+    P0 --> P1 --> P2 --> P3 --> P4
+
+    P4 --> P4C
+    P4C -->|PASS| P5
+    P4C -->|Intentional deviation| P4ADR
+    P4ADR -->|re-check| P4C
+    P4C -->|Unintentional deviation| P4FIX
+    P4FIX -->|re-check| P4C
+
+    P5 --> P5C
+    P5C -->|PASS| P6
+    P5C -->|Intentional deviation| P5ADR
+    P5ADR -->|re-check| P5C
+    P5C -->|Unintentional deviation| P5FIX
+    P5FIX -->|re-check| P5C
+
+    P6 --> P7 --> P7B --> FEEDBACK
+    FEEDBACK -->|re-enters as next intent| INTAKE
 ```
