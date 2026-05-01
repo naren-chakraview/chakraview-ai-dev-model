@@ -189,6 +189,7 @@ The running system generates the next business intent. Phase 7 and Phase 7b dete
 **Compliance Agent:**
 
 - "Strategy Pattern is specified in scope — is this an architectural decision that needs an ADR, or an implementation detail the agent decides? If architectural, a stub is needed before Phase 0."
+- "The billing engine refactor — does this stay within the existing billing bounded context, or does model-aware pricing warrant its own pricing context with separate invariants and ownership?"
 - "Monthly quota storage — which service is the quota authority? If it's shared across services, that conflicts with the DB-per-service principle."
 - "AC2 returns a 'bill' object; invoice generation is scoped out. Does the bill response need to be invoice-schema-compatible (same fields, just not persisted), or is it a transient calculation response only?"
 
@@ -201,6 +202,7 @@ The running system generates the next business intent. Phase 7 and Phase 7b dete
 
 *Human resolves:*
 - Strategy Pattern → new ADR required; human authors the stub
+- Billing refactor stays within the existing billing bounded context; no new context warranted
 - Quota owned exclusively by the billing service; no sharing across services
 - Bill object is transient; no invoice schema compatibility required
 - Unknown `modelId` → HTTP 400 (same as AC1 — treated as invalid input)
