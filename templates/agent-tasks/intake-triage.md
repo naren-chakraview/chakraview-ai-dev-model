@@ -1,7 +1,8 @@
 # Agent Task: Intake / Triage — {Feature Name}
 
 > **Template usage:** Replace all `{placeholder}` values before running.
-> Required substitutions: `{Feature Name}`, `{service}`, `{context}`, `{path-to-intent}`.
+> Required substitutions: `{Feature Name}`, `{service}`, `{context}`, `{path-to-intent}`, `{date}`.
+> Note: `{service}` is the name of the service whose SLA contract will be produced. `{context}` is the bounded context name for domain invariants — these may differ in DDD (e.g., service = `billing-api`, context = `billing`).
 
 **Task type**: Agent (multi-persona — run each role separately or in sequence)
 **Spec version**: 1.0
@@ -28,7 +29,7 @@ Analyse the business intent for `{Feature Name}` through two persona rounds. Sur
 
 ---
 
-## Round 1 — You are the Compliance Agent
+## Round 1a — You are the Compliance Agent
 
 Read the business intent. Respond with:
 
@@ -41,7 +42,7 @@ Format each item as a direct question or challenge to the human. Do not answer y
 
 ---
 
-## Round 1 — You are the Implementation Agent
+## Round 1b — You are the Implementation Agent
 
 Read the business intent. Respond with:
 
@@ -54,7 +55,7 @@ Format each item as a direct question or challenge to the human. Do not answer y
 
 ---
 
-## [Human resolves Round 1]
+## Human Resolution — Round 1
 
 Update this document with each resolved decision before proceeding to Round 2. Format:
 
@@ -68,7 +69,7 @@ Flag unresolved items as `⚠ UNRESOLVED: {question}`.
 
 ---
 
-## Round 2 — You are the Documentation Agent
+## Round 2a — You are the Documentation Agent
 
 Re-read the updated document (including Round 1 resolutions). Respond with:
 
@@ -80,11 +81,11 @@ Format each item as a direct question or challenge to the human.
 
 ---
 
-## Round 2 — You are the Script Authoring Agent
+## Round 2b — You are the Script Authoring Agent
 
 Re-read the updated document (including Round 1 resolutions). Respond with:
 
-1. **Scriptability** — for each deterministic transformation: script name (`tooling/{name}.py`), inputs, output file path.
+1. **Scriptability** — for each deterministic transformation: script name (`tooling/{name}.{ext}` — use the project's standard script extension from `ai-agents/context/coding-standards.md`), inputs, output file path.
 2. **Validation needs** — for each new contract artifact: file path, format, and the `validate-contracts.sh` extension required.
 3. **Generation targets** — for each Helm value, CI variable, or manifest that will reference new values: the generation script needed in Phase 4.
 
@@ -92,9 +93,11 @@ Format each item as a direct question or challenge to the human.
 
 ---
 
-## [Human resolves Round 2]
+## Human Resolution — Round 2
 
 Update this document with each resolved decision using the same format as Round 1. All `⚠ UNRESOLVED` items must be closed before producing outputs.
+
+Do not re-ask questions already resolved in Round 1 — Round 2 agents read the updated document and treat all Round 1 resolutions as settled decisions.
 
 ---
 
@@ -102,7 +105,7 @@ Update this document with each resolved decision using the same format as Round 
 
 ### Intake Report
 
-Append a `## Resolved Decisions` section listing all Q/A pairs from both rounds.
+Save to `docs/intake/{feature-name}-intake-report.md` (slug-ify `{Feature Name}`). Append a `## Resolved Decisions` section listing all Q/A pairs from both rounds.
 
 ### Draft Contracts
 
@@ -110,19 +113,19 @@ Produce draft files for human review. Name each file using the project's contrac
 
 - `contracts/slas/{service}-sla.yaml`
 - `contracts/domain-invariants/{context}-invariants.md`
-- `contracts/event-schemas/{EventName}.json` (if new events identified)
+- `contracts/event-schemas/<EventName>.json` — one file per event identified during intake; omit if no new events
 - Any additional artifacts identified by Script Authoring Agent
 
 ### Triage Decision
 
 ```yaml
-classification: {new feature | contract patch | observability gap | infra change | implementation patch}
-entry_point: Phase {N}
-intake_dialogue: {full | round-1-only | none}
-adr_stubs_required: {yes | no}
-new_scripts_needed: {yes | no}
+classification: # one of: new feature | contract patch | observability gap | infra change | implementation patch
+entry_point: # Phase 0, 1, 2, 4, or 5
+intake_dialogue: # full | round-1-only | none
+adr_stubs_required: # yes | no
+new_scripts_needed: # yes | no
 draft_contracts:
-  - contracts/{path}
+  - # contracts/{path} — one entry per draft contract produced
 ```
 
 ---
@@ -136,4 +139,4 @@ draft_contracts:
 - [ ] Round 2 questions from Script Authoring Agent are present and addressed
 - [ ] Zero `⚠ UNRESOLVED` items remain
 - [ ] Draft contracts are present for human review
-- [ ] Triage decision YAML block is complete with no `{placeholder}` values
+- [ ] Triage decision YAML block is complete — all comment fields replaced with actual values
