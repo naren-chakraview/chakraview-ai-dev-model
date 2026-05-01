@@ -94,6 +94,7 @@ nav:
     - Contracts: mechanism/contracts.md
     - Agent vs Script: mechanism/agent-vs-script.md
     - Guardrails: mechanism/guardrails.md
+  - Intake/Triage: intake/index.md
   - Workflow: workflow/index.md
   - Task Specs: task-specs/index.md
   - Case Studies: case-studies/index.md
