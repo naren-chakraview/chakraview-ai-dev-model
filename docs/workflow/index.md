@@ -5,13 +5,40 @@ description: The complete 7-phase workflow — from bootstrap through continuous
 
 # Workflow
 
-The workflow sequences all six personas across eight phases. Each phase has explicit inputs, outputs, persona assignments, and a human review gate before the next phase begins.
+The workflow is a **closed cycle**. Business intent enters at **Intake/Triage**, is classified and routed to the right phase entry point, executes through the relevant phases, reaches the running system, and generates signals that re-enter as the next business intent.
 
-The phases are not strictly linear — Phases 7 and 7b run continuously once the system is live. But Phases 0–6 must run in order; each phase's outputs are required inputs for the next.
+Phases 0–6 must run in order — each phase's outputs are required inputs for the next. Phase 7 and 7b are the **feedback arc**: they detect change signals from the running system and produce the next Intake input, closing the loop.
+
+Full Intake/Triage documentation: [Intake/Triage](../intake/index.md)
 
 ---
 
 ```
+┌─────────────────────────────────────────────────────────────────────────┐
+│ INTAKE / TRIAGE  ← all business intent enters here                     │
+│                                                                         │
+│  Input: user story, feature brief, incident report, market signal       │
+│                                                                         │
+│  Round 1: [6 Compliance Agent] + [5 Implementation Agent]               │
+│    Challenge: ADR conflicts, bounded context, feasibility,              │
+│    state ownership, pattern decisions, edge cases                       │
+│                                                                         │
+│  Round 2: [2 Documentation Agent] + [3 Script Authoring Agent]          │
+│    Challenge: ubiquitous language, ADR scope, scriptability,            │
+│    validation needs, generation targets                                  │
+│                                                                         │
+│  Output: Intake Report + Draft Contracts + Triage Decision              │
+│                                                                         │
+│  Triage routes to entry point:                                          │
+│    New feature / service ──────────────────────────────→ Phase 0       │
+│    Contract patch (no dialogue) ──────────────────────→ Phase 0        │
+│    Observability gap ─────────────────────────────────→ Phase 2        │
+│    Infra / CI change ─────────────────────────────────→ Phase 4        │
+│    Implementation patch ──────────────────────────────→ Phase 5        │
+│                                                                         │
+│  See: docs/intake/index.md                                              │
+└──────────────────────────────┬──────────────────────────────────────────┘
+                               ↓
 ┌─────────────────────────────────────────────────────────────────────────┐
 │ PHASE 0: Bootstrap                                                      │
 │                                                                         │
@@ -226,5 +253,17 @@ The phases are not strictly linear — Phases 7 and 7b run continuously once the
 │  Step 7 — Migration phase doc (if extracted from monolith):             │
 │    [2] Documentation Agent writes migration phase doc                   │
 │    ← Human Review: extraction order correct? rollback gate defined?     │
+└──────────────────────────────┬──────────────────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│ FEEDBACK ARC → signals re-enter as new Business Intent at INTAKE        │
+│                                                                         │
+│  SLA breach alert           → "Invariant gap" intent  → Intake Round 1  │
+│  Contract change detected   → direct entry            → Phase 0         │
+│  New bounded context        → full intake dialogue    → Phase 0         │
+│  Compliance review failure  → "ADR amendment needed"  → Intake Round 1  │
+│                                                                         │
+│  ↑ loop back to INTAKE / TRIAGE at top                                  │
 └─────────────────────────────────────────────────────────────────────────┘
 ```
