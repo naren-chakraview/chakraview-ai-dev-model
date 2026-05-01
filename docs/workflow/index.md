@@ -1,6 +1,6 @@
 ---
 title: Workflow
-description: The complete 7-phase workflow — from bootstrap through continuous operation.
+description: The complete workflow cycle — from Intake/Triage through all phases and back.
 ---
 
 # Workflow
@@ -15,7 +15,7 @@ Full Intake/Triage documentation: [Intake/Triage](../intake/index.md)
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
-│ INTAKE / TRIAGE  ← all business intent enters here                     │
+│ INTAKE / TRIAGE  ← all business intent enters here                      │
 │                                                                         │
 │  Input: user story, feature brief, incident report, market signal       │
 │                                                                         │
@@ -25,7 +25,7 @@ Full Intake/Triage documentation: [Intake/Triage](../intake/index.md)
 │                                                                         │
 │  Round 2: [2 Documentation Agent] + [3 Script Authoring Agent]          │
 │    Challenge: ubiquitous language, ADR scope, scriptability,            │
-│    validation needs, generation targets                                  │
+│    validation needs, generation targets                                 │
 │                                                                         │
 │  Output: Intake Report + Draft Contracts + Triage Decision              │
 │                                                                         │
@@ -254,8 +254,7 @@ Full Intake/Triage documentation: [Intake/Triage](../intake/index.md)
 │    [2] Documentation Agent writes migration phase doc                   │
 │    ← Human Review: extraction order correct? rollback gate defined?     │
 └──────────────────────────────┬──────────────────────────────────────────┘
-                               │
-                               ▼
+                               ↓
 ┌─────────────────────────────────────────────────────────────────────────┐
 │ FEEDBACK ARC → signals re-enter as new Business Intent at INTAKE        │
 │                                                                         │
