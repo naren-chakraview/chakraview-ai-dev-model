@@ -30,7 +30,7 @@ Write to `ai-agents/reviews/{phase}-compliance-{service}-{date}.md`:
 # Compliance Report: {phase} — {service} — {date}
 
 **Status**: PASS | DEVIATION
-**Persona reviewed**: Persona 4 | Persona 5
+**Artifact reviewed**: Phase 4 infrastructure (scripts) | Phase 5 implementation (Persona 5)
 **ADRs consulted**: ...
 
 ## Checklist

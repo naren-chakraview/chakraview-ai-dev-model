@@ -13,6 +13,7 @@ reads:
   - contracts/slas/
   - docs/ddd/
   - api/openapi/
+  - api/asyncapi/
   - ai-agents/context/coding-standards.md
   - ai-agents/context/observability-requirements.md
 writes:
@@ -40,7 +41,7 @@ writes:
 1. **No I/O in domain layer**: zero imports from `infrastructure/` in domain files
 2. **Invariant enforcement**: every invariant enforced before any event appended; violations throw a named domain error class
 3. **Outbox pattern**: events published from outbox, not directly from command handlers
-4. **OTEL**: histogram buckets include the SLA `latency_p99_ms` value; metric names match `observability-requirements.md` exactly
+4. **OTEL**: histogram buckets include `latency_p99_ms / 1000` (seconds) as a boundary; metric names match `observability-requirements.md` exactly
 5. **Typed events**: event classes structurally compatible with their JSON Schema counterparts
 
 ## Cannot run before Phase 4
