@@ -15,9 +15,9 @@ for f in "$SOURCE_DIR"/task-*.md "$SOURCE_DIR"/persona-*.md "$SOURCE_DIR"/meta-*
     [[ -z "$(get_fm "$f" "$field")" ]] && echo "FAIL: $(basename "$f") missing: $field" && ERRORS=$((ERRORS+1))
   done
   name=$(get_fm "$f" "name")
-  [[ "$name" != chakraview:* ]] && echo "FAIL: $(basename "$f") name '$name' must start with chakraview:" && ERRORS=$((ERRORS+1))
+  [[ -n "$name" && "$name" != chakraview:* ]] && echo "FAIL: $(basename "$f") name '$name' must start with chakraview:" && ERRORS=$((ERRORS+1))
   type=$(get_fm "$f" "type")
-  [[ ! "$type" =~ ^(task|persona|meta)$ ]] && echo "FAIL: $(basename "$f") type '$type' must be task|persona|meta" && ERRORS=$((ERRORS+1))
+  [[ -n "$type" && ! "$type" =~ ^(task|persona|meta)$ ]] && echo "FAIL: $(basename "$f") type '$type' must be task|persona|meta" && ERRORS=$((ERRORS+1))
 done
 
 [[ $FILES -eq 0 ]] && echo "FAIL: no source files found" && exit 1
