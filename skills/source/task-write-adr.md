@@ -38,6 +38,8 @@ Produce a complete ADR in MADR format from the human-authored context stub. The 
 docs/adrs/{adr-number}-{decision-title}.md
 ```
 
+After writing the full ADR, the human-authored stub (`{adr-number}-{decision-title}-stub.md`) should be deleted — the completed ADR is the canonical record.
+
 ## Constraints
 
 1. **MADR format**: title, status, date, deciders, context, decision, consequences, alternatives considered.

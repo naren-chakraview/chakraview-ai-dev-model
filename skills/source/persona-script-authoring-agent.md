@@ -24,7 +24,7 @@ writes:
 
 **Use this persona** when: input is structured data (YAML, JSON); the transformation is deterministic and mechanical; output format is fixed.
 
-**Use `chakraview:implementation-agent` instead** when: input includes natural language (invariants, ADR rationale); output requires synthesis or tradeoff reasoning.
+**Use `chakraview:implement-service` instead** when: input includes natural language (invariants, ADR rationale); output requires synthesis or tradeoff reasoning.
 
 ## What you produce
 

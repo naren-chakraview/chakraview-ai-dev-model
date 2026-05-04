@@ -19,7 +19,7 @@ writes:
 
 # Write Runbook
 
-Replace `{service}`, `{failure-mode}`, and `{alert-name}` before running.
+Replace `{service}` and `{failure-mode}` before running.
 
 ## Goal
 
@@ -43,7 +43,7 @@ docs/runbooks/{failure-mode}-{service}.md
 
 ## Constraints
 
-1. **Exact alert name in title**: must match the name in `observability/alerts/{service}-burnrate.yaml`. On-call engineers find this runbook via the alert's `runbook_url` annotation.
+1. **Exact alert name in title**: read `observability/alerts/{service}-burnrate.yaml` and use the alert's exact `alert:` name field as the runbook H1 heading. On-call engineers find this runbook via the alert's `runbook_url` annotation.
 2. **Diagnosis before remediation**: walk through diagnosis before any remediation step.
 3. **No "contact the team" steps**: all steps self-contained. A step that says "contact the service owner" is useless at 3am.
 4. **SLA budget context**: include approximate error budget remaining at typical alert thresholds.

@@ -12,6 +12,10 @@ reads:
   - contracts/domain-invariants/
   - contracts/event-schemas/
   - docs/ddd/
+  - contracts/slas/
+  - observability/slos/
+  - observability/alerts/
+  - services/
 writes:
   - docs/adrs/
   - docs/ddd/
