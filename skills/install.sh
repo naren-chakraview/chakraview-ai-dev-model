@@ -26,7 +26,7 @@ done
 get_fm() {
   local file="$1" field="$2"
   awk -v f="$field" '
-    BEGIN{c=0; found=0}
+    BEGIN{c=0; found=0; out=""}
     /^---/{c++;next}
     c==1 && $0~"^"f":" {
       sub("^"f":[ ]*","")
@@ -36,15 +36,25 @@ get_fm() {
     c==1 && found && /^[[:space:]]/ {
       sub(/^[[:space:]]*/,"")
       sub(/[[:space:]]*$/,"")
-      print; exit
+      out = (out == "") ? $0 : out " " $0
+      next
     }
-    c==1 && found { exit }
+    c==1 && found { if (out != "") print out; exit }
+    c>=2 && found { if (out != "") print out; exit }
   ' "$file"
 }
 
 strip_fm() {
   local file="$1"
   awk 'BEGIN{c=0} /^---/ && c<2 {c++;next} c>=2{print}' "$file"
+}
+
+read_yaml() {
+  local file="$1" field="$2" default="$3"
+  [[ -f "$file" ]] || { echo "$default"; return; }
+  local val
+  val=$(awk -v f="$field" '$0~"^"f":[ ]*"{sub("^"f":[ ]*","");print;exit}' "$file")
+  [[ -n "$val" ]] && echo "$val" || echo "$default"
 }
 
 write_file() {
@@ -112,7 +122,9 @@ install_claude_code() {
   install_context_files
   while IFS= read -r f; do
     local name slug
-    name=$(get_fm "$f" "name"); slug="${name#chakraview:}"
+    name=$(get_fm "$f" "name")
+    # slug derivation via prefix strip is equivalent to plugin.json's slug map
+    slug="${name#chakraview:}"
     write_file "$root/$slug/SKILL.md" "$f"
   done < <(source_files)
   echo "  Claude Code install complete."
@@ -126,9 +138,10 @@ install_cursor() {
   install_context_files
   local tmp; tmp=$(mktemp)
   while IFS= read -r f; do
-    local name slug desc
+    local name slug desc always_apply
     name=$(get_fm "$f" "name"); slug="${name#chakraview:}"; desc=$(get_fm "$f" "description")
-    { echo "---"; echo "description: \"$name — $desc\""; echo "alwaysApply: false"; echo "---"; echo ""; strip_fm "$f"; } > "$tmp"
+    always_apply=$(read_yaml "$PLATFORMS_DIR/cursor/defaults.yaml" "alwaysApply" "false")
+    { echo "---"; echo "description: \"$name — $desc\""; echo "alwaysApply: $always_apply"; echo "---"; echo ""; strip_fm "$f"; } > "$tmp"
     write_file "$rules/chakraview-$slug.mdc" "$tmp"
   done < <(source_files)
   rm -f "$tmp"
@@ -143,9 +156,10 @@ install_windsurf() {
   install_context_files
   local tmp; tmp=$(mktemp)
   while IFS= read -r f; do
-    local name slug desc
+    local name slug desc always_apply
     name=$(get_fm "$f" "name"); slug="${name#chakraview:}"; desc=$(get_fm "$f" "description")
-    { echo "---"; echo "description: \"$name — $desc\""; echo "alwaysApply: false"; echo "---"; echo ""; strip_fm "$f"; } > "$tmp"
+    always_apply=$(read_yaml "$PLATFORMS_DIR/windsurf/defaults.yaml" "alwaysApply" "false")
+    { echo "---"; echo "description: \"$name — $desc\""; echo "alwaysApply: $always_apply"; echo "---"; echo ""; strip_fm "$f"; } > "$tmp"
     write_file "$rules/chakraview-$slug.md" "$tmp"
   done < <(source_files)
   rm -f "$tmp"
@@ -226,7 +240,7 @@ detect_platform() {
   esac
 }
 
-[[ "$RUN_INIT" == true ]] && "$SKILLS_DIR/scaffold.sh" --project-dir "$PROJECT_DIR"
+[[ "$RUN_INIT" == true ]] && [[ "$DRY_RUN" == false ]] && "$SKILLS_DIR/scaffold.sh" --project-dir "$PROJECT_DIR"
 
 if [[ -n "$TARGET" ]]; then
   run_platform "$TARGET"

@@ -3,6 +3,12 @@
 Installable AI agent skills for the [Chakraview AI Dev Model](../docs/model.md).
 Supports Claude Code, Cursor, Windsurf, GitHub Copilot, OpenAI Codex, and Gemini CLI.
 
+## Prerequisites
+
+- Bash 4.5+
+- The target platform installed (e.g., Claude Code CLI, Cursor, Windsurf)
+- Run from the `skills/` directory inside the `chakraview-ai-dev-model` repo
+
 ## Quickstart
 
 ```bash
