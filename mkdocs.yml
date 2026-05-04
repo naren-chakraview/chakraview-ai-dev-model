@@ -98,4 +98,5 @@ nav:
   - Intake/Triage: intake/index.md
   - Workflow: workflow/index.md
   - Task Specs: task-specs/index.md
+  - Skills Plugin: skills/index.md
   - Case Studies: case-studies/index.md
