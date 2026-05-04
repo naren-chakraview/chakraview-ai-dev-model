@@ -1,3 +1,5 @@
+> **Template**: Fill in all `{placeholder}` values before running any Chakraview skills. This file is copied to `ai-agents/context/coding-standards.md` in your project.
+
 # Context: Coding Standards
 
 > **Template usage:** Fill in project-specific values for all `{placeholder}` items.

@@ -1,3 +1,5 @@
+> **Template**: Fill in all `{placeholder}` values before running any Chakraview skills. This file is copied to `ai-agents/context/observability-requirements.md` in your project.
+
 # Context: Observability Requirements
 
 > **Template usage:** Replace all `{placeholder}` items with project-specific values before using this document.
@@ -91,7 +93,7 @@ Every log entry must include these fields as structured JSON:
 }
 ```
 
-Do not log PII ({examples of PII relevant to the domain}) in structured fields. Use obfuscation helpers from `{context path}/coding-standards.md`.
+Do not log PII ({examples of PII relevant to the domain}) in structured fields. Use obfuscation helpers from `ai-agents/context/coding-standards.md`.
 
 ---
 
