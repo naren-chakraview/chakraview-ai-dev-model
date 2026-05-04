@@ -25,12 +25,26 @@ done
 
 get_fm() {
   local file="$1" field="$2"
-  awk -v f="$field" 'BEGIN{c=0} /^---/{c++;next} c==1 && $0~"^"f":"{sub("^"f":[ ]*","");print;exit}' "$file"
+  awk -v f="$field" '
+    BEGIN{c=0; found=0}
+    /^---/{c++;next}
+    c==1 && $0~"^"f":" {
+      sub("^"f":[ ]*","")
+      if ($0 == ">" || $0 == "") { found=1; next }
+      print; exit
+    }
+    c==1 && found && /^[[:space:]]/ {
+      sub(/^[[:space:]]*/,"")
+      sub(/[[:space:]]*$/,"")
+      print; exit
+    }
+    c==1 && found { exit }
+  ' "$file"
 }
 
 strip_fm() {
   local file="$1"
-  awk 'BEGIN{c=0} /^---/{c++;next} c>=2{print}' "$file"
+  awk 'BEGIN{c=0} /^---/ && c<2 {c++;next} c>=2{print}' "$file"
 }
 
 write_file() {
