@@ -5,7 +5,7 @@ SLUGS=(workflow intake-triage implement-service compliance-review write-adr writ
 ERRORS=0
 
 # Cursor
-TMP=$(mktemp -d); mkdir -p "$TMP/.cursor"; trap "rm -rf $TMP" EXIT
+TMP=$(mktemp -d); TMP2=""; mkdir -p "$TMP/.cursor"; trap 'rm -rf "$TMP" "${TMP2:-}"' EXIT
 "$SKILLS_DIR/install.sh" --target cursor --project-dir "$TMP"
 for slug in "${SLUGS[@]}"; do
   dest="$TMP/.cursor/rules/chakraview-$slug.mdc"
@@ -24,7 +24,6 @@ TMP2=$(mktemp -d); mkdir -p "$TMP2/.windsurf"
 for slug in "${SLUGS[@]}"; do
   [[ -f "$TMP2/.windsurf/rules/chakraview-$slug.md" ]] && echo "OK windsurf: $slug" || { echo "FAIL windsurf: $slug"; ERRORS=$((ERRORS+1)); }
 done
-rm -rf "$TMP2"
 
 [[ $ERRORS -gt 0 ]] && echo "$ERRORS error(s)" && exit 1
 echo "Cursor/Windsurf: all tests passed"
