@@ -6,13 +6,14 @@ description: >
   from contracts; wire OTEL instrumentation from SLA targets
 triggers: [Phase 5 entry — contracts/domain models/infra scaffold all exist, implement a service from contracts]
 phases: [5]
-personas: [5, 6]
+personas: [5]
 reads:
   - contracts/domain-invariants/
   - contracts/event-schemas/
   - contracts/slas/
   - docs/ddd/
   - api/openapi/
+  - api/asyncapi/
   - ai-agents/context/coding-standards.md
   - ai-agents/context/observability-requirements.md
 writes:
@@ -21,7 +22,7 @@ writes:
 
 # Implement Service
 
-Replace `{service}`, `{Service Name}`, `{ext}`, `{EventName}`, `{typecheck command}`, `{test command}`, `{validation library}`, and `{event store}` with project-specific values.
+Replace `{service}`, `{Service Name}`, `{ext}`, `{EventName}`, `{typecheck command}`, and `{test command}` with project-specific values.
 
 ## Goal
 
@@ -37,6 +38,7 @@ Produce the skeleton for the {Service Name} service: domain layer, application l
 | `docs/ddd/{service}/domain-model.md` | Aggregate structure, commands, state machine |
 | `docs/ddd/{service}/state-machine.md` | State transition guard logic |
 | `api/openapi/{service}-api-v1.yaml` | Route handler signatures |
+| `api/asyncapi/{service}-events.yaml` | Event channel schemas for async consumers |
 | `ai-agents/context/coding-standards.md` | All code must follow these |
 | `ai-agents/context/observability-requirements.md` | Required metrics, traces, logs |
 
@@ -56,6 +58,17 @@ services/{service}/src/
 services/{service}/tests/domain/{Aggregate}.test.{ext}
 services/{service}/Dockerfile
 ```
+
+## Procedure
+
+1. Read all inputs listed above before writing any code.
+2. Implement domain layer: aggregate root, status type, domain error classes, event classes.
+3. Implement application layer: command handler(s) that delegate to the aggregate.
+4. Implement infrastructure layer: repository, event publisher, OTEL instrumentation.
+5. Write domain tests: one test per invariant ID from `contracts/domain-invariants/`.
+6. Run `{typecheck command}` — fix all type errors before proceeding.
+7. Run `{test command}` — all domain tests must pass.
+8. Run `tooling/validate-contracts.sh` — must exit 0.
 
 ## Constraints
 

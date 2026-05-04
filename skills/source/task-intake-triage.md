@@ -6,7 +6,7 @@ description: >
   edge cases, ADR needs, and scriptability before any contract is written
 triggers: [starting a new feature or service, business intent needs review before contracts are written, intake or triage needed]
 phases: [0]
-personas: [2, 3, 5, 6]
+personas: [6, 5, 2, 3]
 reads:
   - docs/adrs/
   - contracts/

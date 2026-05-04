@@ -11,6 +11,7 @@ reads:
   - docs/adrs/
   - ai-agents/context/
   - contracts/slas/
+  - contracts/domain-invariants/
   - infrastructure/helm/charts/
   - services/
 writes:
@@ -19,7 +20,7 @@ writes:
 
 # Architectural Compliance Review
 
-Replace `{service}`, `{project}`, and `{phase}` before running.
+Replace `{service}`, `{phase}`, and `{date}` before running.
 
 ## Goal
 
@@ -45,7 +46,7 @@ Also: `contracts/domain-invariants/{service}-invariants.md`
 
 ## Output
 
-Write to `ai-agents/reviews/{phase}-compliance-{service}-{date}.md`.
+Write to `ai-agents/reviews/{phase}-compliance-{service}-{date}.md` where `{date}` is ISO 8601 (e.g., 2026-05-03).
 
 List every check (even passing ones). For each deviation: file:line, ADR violated, classification, resolution.
 
