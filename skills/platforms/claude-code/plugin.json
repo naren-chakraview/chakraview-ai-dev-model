@@ -1,0 +1,17 @@
+{
+  "namespace": "chakraview",
+  "skills": {
+    "chakraview:workflow": "workflow",
+    "chakraview:intake-triage": "intake-triage",
+    "chakraview:implement-service": "implement-service",
+    "chakraview:compliance-review": "compliance-review",
+    "chakraview:write-adr": "write-adr",
+    "chakraview:write-runbook": "write-runbook",
+    "chakraview:write-migration-phase": "write-migration-phase",
+    "chakraview:script-authoring": "script-authoring",
+    "chakraview:documentation-agent": "documentation-agent",
+    "chakraview:script-authoring-agent": "script-authoring-agent",
+    "chakraview:implementation-agent": "implementation-agent",
+    "chakraview:compliance-agent": "compliance-agent"
+  }
+}
