@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 1200 310" xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-label="Chakraview AI Dev Model — workflow phases">
+
+<defs>
+  <marker id="ah"  viewBox="0 0 10 6" refX="10" refY="3"
+          markerWidth="7" markerHeight="5" orient="auto">
+    <path d="M0,0 L10,3 L0,6 Z" fill="#546e7a"/>
+  </marker>
+  <marker id="ahb" viewBox="0 0 10 6" refX="10" refY="3"
+          markerWidth="7" markerHeight="5" orient="auto">
+    <path d="M0,0 L10,3 L0,6 Z" fill="#0288d1"/>
+  </marker>
+  <marker id="ahp" viewBox="0 0 10 6" refX="10" refY="3"
+          markerWidth="7" markerHeight="5" orient="auto">
+    <path d="M0,0 L10,3 L0,6 Z" fill="#7B1FA2"/>
+  </marker>
+  <marker id="aha" viewBox="0 0 10 6" refX="10" refY="3"
+          markerWidth="7" markerHeight="5" orient="auto">
+    <path d="M0,0 L10,3 L0,6 Z" fill="#E65100"/>
+  </marker>
+</defs>
+
+<style>
+  svg { font-family: Inter, 'Segoe UI', system-ui, sans-serif; }
+
+  /* ── Node fills ──────────────────────────────── */
+  .ni { fill: #0D47A1; }
+  .np { fill: #283593; }
+  .nf { fill: #4A148C; }
+  .nc { fill: #BF360C; }
+
+  /* ── Text ────────────────────────────────────── */
+  .tp { font-size:13px; fill:#fff; text-anchor:middle;
+        dominant-baseline:middle; font-weight:600; }
+  .tn { font-size:19px; fill:#fff; text-anchor:middle;
+        dominant-baseline:middle; font-weight:700; }
+  .tl { font-size:11px; fill:#78909c; text-anchor:middle; }
+  .tla{ font-size:9px;  fill:#0288d1; text-anchor:middle; font-style:italic; }
+  .tlf{ font-size:9px;  fill:#7B1FA2; text-anchor:middle; font-style:italic; }
+  .tc { font-size:10px; fill:#fff;    text-anchor:middle;
+        dominant-baseline:middle; font-weight:600; }
+
+  /* ── Arrows ──────────────────────────────────── */
+  .am { fill:none; stroke:#546e7a; stroke-width:2;
+        marker-end:url(#ah); }
+  .al { fill:none; stroke:#0288d1; stroke-width:1.5;
+        stroke-dasharray:5 3; marker-end:url(#ahb); }
+  .af { fill:none; stroke:#7B1FA2; stroke-width:2;
+        stroke-dasharray:7 3; marker-end:url(#ahp); }
+  .ac { fill:none; stroke:#E65100; stroke-width:1.5;
+        stroke-dasharray:4 3; marker-end:url(#aha); }
+
+  /* ── Animations ──────────────────────────────── */
+  @keyframes fi { from{opacity:0} to{opacity:1} }
+  @keyframes dp { from{stroke-dashoffset:1500} to{stroke-dashoffset:0} }
+
+  /* Nodes — 0.38s steps */
+  #ni {animation:fi .35s ease-out 0.00s both}
+  #n0 {animation:fi .35s ease-out 0.38s both}
+  #n1 {animation:fi .35s ease-out 0.76s both}
+  #n2 {animation:fi .35s ease-out 1.14s both}
+  #n3 {animation:fi .35s ease-out 1.52s both}
+  #n4 {animation:fi .35s ease-out 1.90s both}
+  #n5 {animation:fi .35s ease-out 2.28s both}
+  #n6 {animation:fi .35s ease-out 2.66s both}
+  #nf {animation:fi .35s ease-out 3.04s both}
+
+  /* Labels appear with their node */
+  #l0 {animation:fi .35s ease-out 0.38s both}
+  #l1 {animation:fi .35s ease-out 0.76s both}
+  #l2 {animation:fi .35s ease-out 1.14s both}
+  #l3 {animation:fi .35s ease-out 1.52s both}
+  #l4 {animation:fi .35s ease-out 1.90s both}
+  #l5 {animation:fi .35s ease-out 2.28s both}
+  #l6 {animation:fi .35s ease-out 2.66s both}
+
+  /* Main arrows — appear midway between source and target */
+  #ai0{animation:fi .25s ease-out 0.19s both}
+  #a01{animation:fi .25s ease-out 0.57s both}
+  #a12{animation:fi .25s ease-out 0.95s both}
+  #a23{animation:fi .25s ease-out 1.33s both}
+  #a34{animation:fi .25s ease-out 1.71s both}
+  #a45{animation:fi .25s ease-out 2.09s both}
+  #a56{animation:fi .25s ease-out 2.47s both}
+  #a6f{animation:fi .25s ease-out 2.85s both}
+
+  /* Feedback arc draws after main flow settles */
+  #afeed {
+    stroke-dasharray:1500; stroke-dashoffset:1500;
+    animation:dp 1.6s ease-in-out 3.5s both;
+  }
+  #lfeed {animation:fi .4s ease-out 5.1s both}
+
+  /* Loop B (P5→P2) */
+  #albB {
+    stroke-dasharray:1500; stroke-dashoffset:1500;
+    animation:dp .9s ease-in-out 5.2s both;
+  }
+  #llbB {animation:fi .3s ease-out 6.1s both}
+
+  /* Loop A (P3→P1) */
+  #albA {
+    stroke-dasharray:1500; stroke-dashoffset:1500;
+    animation:dp .7s ease-in-out 5.7s both;
+  }
+  #llbA {animation:fi .3s ease-out 6.4s both}
+
+  /* CCR branch */
+  #gccr {animation:fi .5s ease-out 6.6s both}
+</style>
+
+<!-- ════════════════════════════════════════════════
+     MAIN FLOW ARROWS
+     ════════════════════════════════════════════════ -->
+<line id="ai0" class="am" x1="125" y1="145" x2="187" y2="145"/>
+<line id="a01" class="am" x1="243" y1="145" x2="317" y2="145"/>
+<line id="a12" class="am" x1="373" y1="145" x2="447" y2="145"/>
+<line id="a23" class="am" x1="503" y1="145" x2="577" y2="145"/>
+<line id="a34" class="am" x1="633" y1="145" x2="707" y2="145"/>
+<line id="a45" class="am" x1="763" y1="145" x2="837" y2="145"/>
+<line id="a56" class="am" x1="893" y1="145" x2="967" y2="145"/>
+<line id="a6f" class="am" x1="1023" y1="145" x2="1069" y2="145"/>
+
+<!-- ════════════════════════════════════════════════
+     NODES
+     ════════════════════════════════════════════════ -->
+
+<!-- INTAKE -->
+<g id="ni">
+  <rect class="ni" x="15" y="125" width="110" height="40" rx="20"/>
+  <text class="tp" x="70" y="145">Intake / Triage</text>
+</g>
+
+<!-- Phase circles 0–6 -->
+<g id="n0"><circle class="np" cx="215" cy="145" r="28"/><text class="tn" x="215" y="145">0</text></g>
+<g id="n1"><circle class="np" cx="345" cy="145" r="28"/><text class="tn" x="345" y="145">1</text></g>
+<g id="n2"><circle class="np" cx="475" cy="145" r="28"/><text class="tn" x="475" y="145">2</text></g>
+<g id="n3"><circle class="np" cx="605" cy="145" r="28"/><text class="tn" x="605" y="145">3</text></g>
+<g id="n4"><circle class="np" cx="735" cy="145" r="28"/><text class="tn" x="735" y="145">4</text></g>
+<g id="n5"><circle class="np" cx="865" cy="145" r="28"/><text class="tn" x="865" y="145">5</text></g>
+<g id="n6"><circle class="np" cx="995" cy="145" r="28"/><text class="tn" x="995" y="145">6</text></g>
+
+<!-- FEEDBACK -->
+<g id="nf">
+  <rect class="nf" x="1070" y="125" width="115" height="40" rx="20"/>
+  <text class="tp" x="1128" y="145">Feedback Arc</text>
+</g>
+
+<!-- ════════════════════════════════════════════════
+     PHASE NAME LABELS (below circles)
+     ════════════════════════════════════════════════ -->
+<text id="l0" class="tl" x="215" y="190">Bootstrap</text>
+<text id="l1" class="tl" x="345" y="190">Architecture</text>
+<text id="l2" class="tl" x="475" y="190">Observability</text>
+<text id="l3" class="tl" x="605" y="190">API Contracts</text>
+<text id="l4" class="tl" x="735" y="190">Infrastructure</text>
+<text id="l5" class="tl" x="865" y="190">Implementation</text>
+<text id="l6" class="tl" x="995" y="190">Migration</text>
+
+<!-- ════════════════════════════════════════════════
+     FEEDBACK ARC — FEEDBACK → INTAKE (above)
+     ════════════════════════════════════════════════ -->
+<path id="afeed" class="af"
+  d="M 1128 125 C 1128 28, 70 28, 70 125"/>
+<text id="lfeed" class="tlf" x="600" y="22">Feedback Arc — signals re-enter as next business intent</text>
+
+<!-- ════════════════════════════════════════════════
+     LOOP B — P5 → P2 (above, medium arc)
+     ════════════════════════════════════════════════ -->
+<path id="albB" class="al"
+  d="M 865 117 C 865 62, 475 62, 475 117"/>
+<text id="llbB" class="tla" x="667" y="55">Loop B — implementation changes SLO assumptions</text>
+
+<!-- ════════════════════════════════════════════════
+     LOOP A — P3 → P1 (above, small arc)
+     ════════════════════════════════════════════════ -->
+<path id="albA" class="al"
+  d="M 605 117 C 605 87, 345 87, 345 117"/>
+<text id="llbA" class="tla" x="474" y="81">Loop A — API contract reveals domain model gap</text>
+
+<!-- ════════════════════════════════════════════════
+     CCR BRANCH — Loop C (below)
+     ════════════════════════════════════════════════ -->
+<g id="gccr">
+  <line class="ac" x1="735" y1="173" x2="710" y2="248"/>
+  <line class="ac" x1="865" y1="173" x2="795" y2="248"/>
+  <rect class="nc" x="635" y="248" width="195" height="38" rx="12"/>
+  <text class="tc" x="732" y="267">CCR — Loop C (any phase)</text>
+</g>
+
+</svg>

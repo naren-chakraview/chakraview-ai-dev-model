@@ -13,6 +13,11 @@ Full Intake/Triage documentation: [Intake/Triage](../intake/index.md)
 
 ---
 
+<object type="image/svg+xml" data="../assets/workflow-animation.svg"
+        style="width:100%;display:block;margin-bottom:2rem;"></object>
+
+## Detailed Flow Reference
+
 ```mermaid
 flowchart TD
     INTAKE["Intake / Triage"]
