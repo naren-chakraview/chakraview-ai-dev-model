@@ -48,6 +48,10 @@ flowchart TD
 
     I["IMPLEMENTATION LAYER<br/><br/>services/&lt;service&gt;/src/domain/<br/>services/&lt;service&gt;/src/domain/events/<br/>services/&lt;service&gt;/src/infrastructure/OtelInstrumentation<br/><br/>observability/slos/&lt;service&gt;-slo.yaml<br/>observability/alerts/&lt;service&gt;-burnrate.yaml"]
 
+    CCR["CONTRACT CHALLENGE REPORT<br/>ai-agents/reviews/ccr-{service}-{date}.md<br/><br/>Any agent surfaces: contract too costly to honor<br/>Human Expert routes to product owner<br/>RELAX → amend contract → re-enter<br/>HOLD → write ADR → resume"]
+
     H -- "consumed by" --> A
     A -- "produces" --> I
+    A -. "CCR: contract challenge (Loop C)" .-> CCR
+    CCR -. "RELAX: amended contract" .-> H
 ```

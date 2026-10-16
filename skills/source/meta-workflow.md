@@ -56,3 +56,4 @@ ls ai-agents/reviews/ 2>/dev/null      # empty → compliance not run
 | Compliance review needed | `chakraview:compliance-review` |
 | Documentation / runbook needed | `chakraview:write-runbook` or `chakraview:write-migration-phase` |
 | Deterministic transformation identified | `chakraview:script-authoring` |
+| Contract is too costly/complex to honor | Write a Contract Challenge Report (CCR) to `ai-agents/reviews/ccr-{service}-{date}.md`; halt on affected contract; surface to Human Domain Expert |

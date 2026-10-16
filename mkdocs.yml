@@ -99,4 +99,7 @@ nav:
   - Workflow: workflow/index.md
   - Task Specs: task-specs/index.md
   - Skills Plugin: skills/index.md
+  - ADRs:
+    - adrs/index.md
+    - "CCR Threshold Rule": adrs/adr-ccr-threshold.md
   - Case Studies: case-studies/index.md

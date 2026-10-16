@@ -46,6 +46,9 @@ flowchart TD
     C -->|"unintentional deviation\n+ compliance report"| S
     C -->|"unintentional deviation\n+ compliance report"| I
     H -->|"amended ADR"| C
+    D -->|"CCR (Loop C)\ncontract challenge"| H
+    S -->|"CCR (Loop C)\ncontract challenge"| H
+    I -->|"CCR (Loop C)\ncontract challenge"| H
 
     style H fill:#dbeafe,stroke:#3b82f6
     style C fill:#fef9c3,stroke:#eab308

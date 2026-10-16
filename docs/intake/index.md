@@ -164,6 +164,7 @@ The running system generates the next business intent. Phase 7 and Phase 7b dete
 | Phase 7b — New bounded context decided | Architectural decision | "New context: {name}" → full intake dialogue |
 | External market signal | Product decision | New feature brief → full intake dialogue |
 | Compliance review failure | Architectural debt | "ADR amendment needed" → Intake Round 1 |
+| CCR resolution — contract relaxed | Agent surfaced cost/complexity challenge; product owner approved amendment | Amended contract → re-enter Phase 0 direct |
 
 ---
 

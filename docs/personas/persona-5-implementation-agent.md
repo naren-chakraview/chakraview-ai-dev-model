@@ -30,3 +30,12 @@ Its primary correctness signal is: does `tooling/validate-contracts.sh` pass, an
 ## Constraint: cannot be invoked before Phase 4
 
 This persona must not run before Persona 3 and 4 have produced the Helm chart scaffold and CI pipeline. The service code and infrastructure must evolve together.
+
+## Contract Challenge Responsibility
+
+When executing a task, if a contract is discovered to be technically costly or complex to honor, apply the threshold rule:
+
+- **Write a CCR** when resolution would amend a file in `contracts/slas/`, `contracts/domain-invariants/`, or `contracts/event-schemas/`, or require a new or amended ADR. Halt work on the affected contract. Write to `ai-agents/reviews/ccr-{service}-{date}.md`. Surface to the Human Domain Expert before continuing.
+- **Note inline** when the observation does not meet the above threshold. Continue work.
+
+Reference: [CCR Threshold Rule](../adrs/adr-ccr-threshold.md)

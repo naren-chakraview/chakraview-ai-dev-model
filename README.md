@@ -38,8 +38,10 @@ docs/
   model.md          The core principle and why it works
   personas/         All 6 personas — inputs, outputs, constraints
   mechanism/        Contract boundaries, agent-vs-script decision rule, guardrails
-  workflow/         Complete 7-phase workflow (bootstrap → continuous)
-  task-specs/       How to write task specs; compliance report format
+  workflow/         Complete 7-phase workflow (bootstrap → continuous) + 3 feedback loops
+  intake/           Intake/Triage phase — how raw intent becomes contracts
+  task-specs/       How to write task specs; compliance and CCR report formats
+  adrs/             Model-level architectural decisions (CCR threshold rule, etc.)
   case-studies/     Projects built with this model
 templates/
   agent-tasks/      Parameterised task spec templates for LLM agents
