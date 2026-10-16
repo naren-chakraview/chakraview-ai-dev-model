@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -372,6 +372,28 @@
 
       </a>
     </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../adrs/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  ADRs
+
+        </a>
+      </li>
+    
   
 
       
@@ -1073,6 +1095,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#contract-challenge-report-ccr-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contract Challenge Report (CCR) Format
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#templates" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1114,6 +1147,117 @@
   
 
       </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../adrs/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADRs
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_9" id="__nav_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ADRs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adrs/adr-ccr-threshold/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CCR Threshold Rule
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--accepted"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -1200,6 +1344,17 @@
     <span class="md-ellipsis">
       
         Compliance Report Format
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contract-challenge-report-ccr-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contract Challenge Report (CCR) Format
       
     </span>
   </a>
@@ -1313,6 +1468,22 @@
 </ul>
 <p>When uncertain, prefer <strong>intentional</strong> — it forces a human to make the decision explicit.</p>
 <hr />
+<hr />
+<h2 id="contract-challenge-report-ccr-format">Contract Challenge Report (CCR) Format<a class="headerlink" href="#contract-challenge-report-ccr-format" title="Permanent link">&para;</a></h2>
+<p>Any agent (Personas 2, 3, 5, or 6) may write a CCR when it discovers a contract is technically costly or complex to honor. CCRs live in <code>ai-agents/reviews/</code> alongside Compliance Reports.</p>
+<p><strong>When to write one</strong> — when resolution would amend a file in <code>contracts/slas/</code>, <code>contracts/domain-invariants/</code>, or <code>contracts/event-schemas/</code>, or require a new ADR. Below that threshold: note the observation inline and continue.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>contract: &lt;path&gt;#&lt;specific clause or target&gt;
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>cost:     &lt;what honoring this contract technically requires; cost delta if calculable&gt;
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>question: &lt;specific choice for product/business owner — name the concrete alternative&gt;
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>phase:    &lt;workflow phase number (0–6)&gt;
+</span></code></pre></div>
+<p><strong>Routing:</strong> agent halts on the affected contract → Human Domain Expert routes to product/business owner → outcome recorded:</p>
+<ul>
+<li><strong>RELAX</strong>: amend the contract, re-enter Phase 0</li>
+<li><strong>HOLD</strong>: write an ADR explaining why the contract stands, resume from originating phase</li>
+</ul>
+<p>See: <a href="../adrs/adr-ccr-threshold/">CCR Threshold Rule ADR</a> · Template: <a href="../templates/"><code>templates/agent-tasks/contract-challenge.md</code></a></p>
+<hr />
 <h2 id="templates">Templates<a class="headerlink" href="#templates" title="Permanent link">&para;</a></h2>
 <p>Ready-to-use parameterised templates for all task types: <a href="../templates/"><code>templates/</code></a></p>
 
@@ -1387,7 +1558,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.indexes", "navigation.top", "toc.follow", "search.suggest", "search.highlight", "content.code.annotate", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

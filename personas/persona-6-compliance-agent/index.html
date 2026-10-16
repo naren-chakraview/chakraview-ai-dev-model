@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -372,6 +372,28 @@
 
       </a>
     </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../adrs/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  ADRs
+
+        </a>
+      </li>
+    
   
 
       
@@ -836,6 +858,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#relationship-to-contract-challenge-reports" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relationship to Contract Challenge Reports
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#compliance-report-format" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1140,6 +1173,117 @@
   
   
   
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../adrs/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADRs
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_9" id="__nav_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ADRs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adrs/adr-ccr-threshold/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CCR Threshold Rule
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--accepted"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../case-studies/" class="md-nav__link">
         
@@ -1234,6 +1378,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#relationship-to-contract-challenge-reports" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relationship to Contract Challenge Reports
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#compliance-report-format" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1321,6 +1476,13 @@
 <h2 id="what-distinguishes-this-persona">What distinguishes this persona<a class="headerlink" href="#what-distinguishes-this-persona" title="Permanent link">&para;</a></h2>
 <p>It has no implementation authority. It surfaces deviations; it does not fix them. It is the only persona that reads both the human-authored architectural intent (ADRs, principles) and the agent-produced artifacts simultaneously, and reasons about the gap between them.</p>
 <p>The second compliance pass (after an ADR is written for an intentional deviation) is a scoped re-check: it reads only the new ADR and the specific deviation flagged, and confirms the ADR covers it. It does not re-run the full checklist.</p>
+<h2 id="relationship-to-contract-challenge-reports">Relationship to Contract Challenge Reports<a class="headerlink" href="#relationship-to-contract-challenge-reports" title="Permanent link">&para;</a></h2>
+<p>This persona does not own CCRs and does not write them. CCR authority belongs to all agent personas equally (Personas 2, 3, 5, and 6).</p>
+<p>If a compliance review discovers that an agent continued past a contract challenge without writing a CCR — evidenced by an implementation that implies a contract was too costly to honor, but no matching CCR exists in <code>ai-agents/reviews/</code> — flag this as a <strong>process deviation</strong> in the compliance report. It is a distinct finding class from a technical deviation and follows the same intentional/unintentional classification:</p>
+<ul>
+<li><strong>Intentional</strong>: the agent made a deliberate judgment that the observation was below the CCR threshold. The Human Domain Expert must confirm this judgment or request a CCR retroactively.</li>
+<li><strong>Unintentional</strong>: the agent overlooked the threshold rule. Re-run the originating persona with the compliance report as context.</li>
+</ul>
 <hr />
 <h2 id="compliance-report-format">Compliance Report Format<a class="headerlink" href="#compliance-report-format" title="Permanent link">&para;</a></h2>
 <p>Reports are committed to <code>ai-agents/reviews/</code> as timestamped markdown files.</p>
@@ -1420,7 +1582,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.indexes", "navigation.top", "toc.follow", "search.suggest", "search.highlight", "content.code.annotate", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

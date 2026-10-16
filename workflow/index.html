@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -372,6 +372,28 @@
 
       </a>
     </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../adrs/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  ADRs
+
+        </a>
+      </li>
+    
   
 
       
@@ -1041,6 +1063,117 @@
   
   
   
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../adrs/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADRs
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_9" id="__nav_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ADRs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adrs/adr-ccr-threshold/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CCR Threshold Rule
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--accepted"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../case-studies/" class="md-nav__link">
         
@@ -1142,6 +1275,13 @@
 
     FEEDBACK["FEEDBACK ARC — signals re-enter as new business intent&lt;br/&gt;&lt;br/&gt;SLA breach alert → Intake Round 1&lt;br/&gt;Contract change detected → Phase 0 direct&lt;br/&gt;New bounded context → full intake dialogue&lt;br/&gt;Compliance review failure → Intake Round 1"]
 
+    CCR["CONTRACT CHALLENGE REPORT — Loop C&lt;br/&gt;&lt;br/&gt;Any agent, any phase&lt;br/&gt;Trigger: contract is technically costly or complex to honor&lt;br/&gt;&lt;br/&gt;Output: ai-agents/reviews/ccr-{service}-{date}.md&lt;br/&gt;&lt;br/&gt;Routing: Agent halts on affected contract&lt;br/&gt;Human Expert → Product/business owner&lt;br/&gt;RELAX: amend contract → re-enter Phase 0&lt;br/&gt;HOLD: write hold ADR → resume originating phase"]
+
+    CCRD{"Relax or Hold?"}
+
+    CCR_RELAX["Amend contract&lt;br/&gt;Re-enter Phase 0"]
+    CCR_HOLD["Write hold ADR&lt;br/&gt;Resume originating phase"]
+
     INTAKE --&gt;|New feature / service| P0
     INTAKE -.-&gt;|Observability gap| P2
     INTAKE -.-&gt;|Infra / CI change| P4
@@ -1164,7 +1304,21 @@
     P5FIX --&gt;|re-check| P5C
 
     P6 --&gt; P7 --&gt; P7B --&gt; FEEDBACK
-    FEEDBACK --&gt;|re-enters as next intent| INTAKE</code></pre>
+    FEEDBACK --&gt;|re-enters as next intent| INTAKE
+
+    P3 --"Loop A: API contract reveals domain model gap&lt;br/&gt;Phase 3 pauses"--&gt; P1
+    P5 --"Loop B: Implementation changes SLO assumptions&lt;br/&gt;Phase 5 pauses"--&gt; P2
+    P1 -.-&gt;|"Loop C"| CCR
+    P3 -.-&gt;|"Loop C"| CCR
+    P5 -.-&gt;|"Loop C"| CCR
+    CCR --&gt; CCRD
+    CCRD --&gt;|RELAX| CCR_RELAX
+    CCRD --&gt;|HOLD| CCR_HOLD
+    CCR_RELAX --&gt; P0</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Loop C — HOLD path</p>
+<p>When the outcome is HOLD, the agent resumes from the phase that raised the CCR (P1, P3, or P5 — whichever issued it). The diagram shows HOLD as a terminal node because the resume destination is the dynamic originating phase, not a fixed next step.</p>
+</div>
 
 
 
@@ -1237,7 +1391,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.indexes", "navigation.top", "toc.follow", "search.suggest", "search.highlight", "content.code.annotate", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>
