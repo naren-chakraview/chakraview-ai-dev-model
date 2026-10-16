@@ -29,3 +29,12 @@ Every Documentation Agent task spec in `ai-agents/tasks/agent/` must name:
 - The human-authored stubs it reads
 - The invariant docs and context docs that constrain its output
 - The acceptance criteria (e.g., every ADR must reference at least one invariant; every runbook must reference a specific alert name)
+
+## Contract Challenge Responsibility
+
+When executing a task, if a contract is discovered to be technically costly or complex to honor, apply the threshold rule:
+
+- **Write a CCR** when resolution would amend a file in `contracts/slas/`, `contracts/domain-invariants/`, or `contracts/event-schemas/`, or require a new or amended ADR. Halt work on the affected contract. Write to `ai-agents/reviews/ccr-{service}-{date}.md`. Surface to the Human Domain Expert before continuing.
+- **Note inline** when the observation does not meet the above threshold. Continue work.
+
+Reference: [CCR Threshold Rule](../adrs/adr-ccr-threshold.md)

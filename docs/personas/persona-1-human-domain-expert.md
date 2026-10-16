@@ -29,3 +29,12 @@ This persona performs the final review gate after each agent phase. The review q
 ## Guardrails
 
 `CODEOWNERS` maps `contracts/` to `@{project}/senior-engineers`. No agent-initiated PR may modify a contract file.
+
+## Contract Challenge Review
+
+Review incoming Contract Challenge Reports (CCRs) in `ai-agents/reviews/ccr-*.md`. Route each to the relevant product or business owner with the cost signal. Record the outcome directly in the CCR file:
+
+- **Relax**: amend the contract file in `contracts/` and re-enter Phase 0 for the affected contract.
+- **Hold**: write an ADR in `docs/adrs/` documenting why the contract stands at this cost. Resume the originating phase once the ADR is written and reviewed.
+
+Neither outcome is undocumented. Every CCR resolution produces a written artifact.
