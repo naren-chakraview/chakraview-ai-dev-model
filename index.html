@@ -556,17 +556,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-model-in-one-diagram" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The Model in One Diagram
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#see-it-in-practice" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1327,17 +1316,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-model-in-one-diagram" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The Model in One Diagram
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#see-it-in-practice" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1378,6 +1356,17 @@
 <p>This framework makes that contract explicit. Humans author <em>contracts</em> — precise, versioned specifications of business intent. Agents receive task specs that enumerate exactly which contracts to read and exactly what to produce. The line between what humans wrote and what agents built is structural, not informal.</p>
 <hr />
 <h2 id="at-a-glance">At a Glance<a class="headerlink" href="#at-a-glance" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart LR
+    H(["① Human Domain Expert\naccountable for correctness"])
+    C["Contracts\n──────────────\nSLA targets\nDomain invariants\nEvent schemas\nADRs · task specs"]
+    A(["AI Agents ②–⑥\naccountable for volume\n──────────────\nDocumentation · Script Authoring\nScript Executor · Implementation\nCompliance"])
+    I["Implementation\n──────────────\nService code + tests\nInfra manifests · CI pipelines\nObservability artifacts"]
+
+    H --&gt;|"authors"| C
+    C --&gt;|"constrains"| A
+    A --&gt;|"produces"| I
+    A -. "CCR: contract challenge" .-&gt; H</code></pre>
+<p>Humans author <em>contracts</em> — the precise, versioned expression of business intent. Agents implement from those contracts. An agent that drifts from a contract produces a defect traceable to a missing or ambiguous contract, not to the agent itself. When technical reality makes a contract too costly to honour, agents surface a Contract Challenge Report — the only documented path back to amending a human-authored contract.</p>
 <div class="grid cards">
 <ul>
 <li>
@@ -1406,19 +1395,6 @@
 </li>
 </ul>
 </div>
-<hr />
-<h2 id="the-model-in-one-diagram">The Model in One Diagram<a class="headerlink" href="#the-model-in-one-diagram" title="Permanent link">&para;</a></h2>
-<pre class="mermaid"><code>flowchart LR
-    H(["① Human Domain Expert\naccountable for correctness"])
-    C["Contracts\n──────────────\nSLA targets\nDomain invariants\nEvent schemas\nADRs · task specs"]
-    A(["AI Agents ②–⑥\naccountable for volume\n──────────────\nDocumentation · Script Authoring\nScript Executor · Implementation\nCompliance"])
-    I["Implementation\n──────────────\nService code + tests\nInfra manifests · CI pipelines\nObservability artifacts"]
-
-    H --&gt;|"authors"| C
-    C --&gt;|"constrains"| A
-    A --&gt;|"produces"| I
-    A -. "CCR: contract challenge" .-&gt; H</code></pre>
-<p>Humans author <em>contracts</em> — the precise, versioned expression of business intent. Agents implement from those contracts. An agent that drifts from a contract produces a defect traceable to a missing or ambiguous contract, not to the agent itself. When technical reality makes a contract too costly to honour, agents surface a Contract Challenge Report — the only documented path back to amending a human-authored contract.</p>
 <hr />
 <h2 id="see-it-in-practice">See It In Practice<a class="headerlink" href="#see-it-in-practice" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/naren-chakraview/chakraview-enterprise-modernization">chakraview-enterprise-modernization</a> used all 6 personas to modernise a Java EE monolith to cloud-native microservices. Read <a href="https://naren-chakraview.github.io/chakraview-enterprise-modernization/how-this-was-built/">how it was built</a>.</p>
