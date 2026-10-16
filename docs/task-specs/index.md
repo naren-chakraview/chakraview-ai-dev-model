@@ -94,6 +94,30 @@ When uncertain, prefer **intentional** — it forces a human to make the decisio
 
 ---
 
+---
+
+## Contract Challenge Report (CCR) Format
+
+Any agent (Personas 2, 3, 5, or 6) may write a CCR when it discovers a contract is technically costly or complex to honor. CCRs live in `ai-agents/reviews/` alongside Compliance Reports.
+
+**When to write one** — when resolution would amend a file in `contracts/slas/`, `contracts/domain-invariants/`, or `contracts/event-schemas/`, or require a new ADR. Below that threshold: note the observation inline and continue.
+
+```
+contract: <path>#<specific clause or target>
+cost:     <what honoring this contract technically requires; cost delta if calculable>
+question: <specific choice for product/business owner — name the concrete alternative>
+phase:    <workflow phase number (0–6)>
+```
+
+**Routing:** agent halts on the affected contract → Human Domain Expert routes to product/business owner → outcome recorded:
+
+- **RELAX**: amend the contract, re-enter Phase 0
+- **HOLD**: write an ADR explaining why the contract stands, resume from originating phase
+
+See: [CCR Threshold Rule ADR](../adrs/adr-ccr-threshold.md) · Template: [`templates/agent-tasks/contract-challenge.md`](../templates/)
+
+---
+
 ## Templates
 
 Ready-to-use parameterised templates for all task types: [`templates/`](../templates/)
