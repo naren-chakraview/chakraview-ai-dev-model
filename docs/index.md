@@ -19,6 +19,21 @@ This framework makes that contract explicit. Humans author *contracts* — preci
 
 ## At a Glance
 
+```mermaid
+flowchart LR
+    H(["① Human Domain Expert\naccountable for correctness"])
+    C["Contracts\n──────────────\nSLA targets\nDomain invariants\nEvent schemas\nADRs · task specs"]
+    A(["AI Agents ②–⑥\naccountable for volume\n──────────────\nDocumentation · Script Authoring\nScript Executor · Implementation\nCompliance"])
+    I["Implementation\n──────────────\nService code + tests\nInfra manifests · CI pipelines\nObservability artifacts"]
+
+    H -->|"authors"| C
+    C -->|"constrains"| A
+    A -->|"produces"| I
+    A -. "CCR: contract challenge" .-> H
+```
+
+Humans author *contracts* — the precise, versioned expression of business intent. Agents implement from those contracts. An agent that drifts from a contract produces a defect traceable to a missing or ambiguous contract, not to the agent itself. When technical reality makes a contract too costly to honour, agents surface a Contract Challenge Report — the only documented path back to amending a human-authored contract.
+
 <div class="grid cards" markdown>
 
 -   :material-account-hard-hat:{ .lg .middle } __6 Personas__
@@ -54,25 +69,6 @@ This framework makes that contract explicit. Humans author *contracts* — preci
     [:octicons-arrow-right-24: Browse Templates](../templates/)
 
 </div>
-
----
-
-## The Model in One Diagram
-
-```mermaid
-flowchart LR
-    H(["① Human Domain Expert\naccountable for correctness"])
-    C["Contracts\n──────────────\nSLA targets\nDomain invariants\nEvent schemas\nADRs · task specs"]
-    A(["AI Agents ②–⑥\naccountable for volume\n──────────────\nDocumentation · Script Authoring\nScript Executor · Implementation\nCompliance"])
-    I["Implementation\n──────────────\nService code + tests\nInfra manifests · CI pipelines\nObservability artifacts"]
-
-    H -->|"authors"| C
-    C -->|"constrains"| A
-    A -->|"produces"| I
-    A -. "CCR: contract challenge" .-> H
-```
-
-Humans author *contracts* — the precise, versioned expression of business intent. Agents implement from those contracts. An agent that drifts from a contract produces a defect traceable to a missing or ambiguous contract, not to the agent itself. When technical reality makes a contract too costly to honour, agents surface a Contract Challenge Report — the only documented path back to amending a human-authored contract.
 
 ---
 
