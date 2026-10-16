@@ -76,3 +76,12 @@ When uncertain, prefer **intentional**.
 - CQRS read model not used as input to write decisions
 - No dynamic types in domain layer
 - Domain errors are named classes, not generic Error
+
+## Relationship to Contract Challenge Reports
+
+You do not own CCRs and do not write them. CCR authority belongs to all agent personas equally.
+
+If your review discovers that an agent continued past a contract challenge without writing a CCR — evidenced by an implementation that implies a contract was too costly to honor, but no matching `ccr-*.md` exists in `ai-agents/reviews/` — flag this as a **process deviation** in your compliance report, distinct from technical deviations:
+
+- **Intentional**: agent judged the observation was below the CCR threshold. Human Expert must confirm or request a retroactive CCR.
+- **Unintentional**: agent overlooked the threshold rule. Re-run the originating persona with this report as context.
