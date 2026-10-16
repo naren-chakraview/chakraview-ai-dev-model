@@ -1408,16 +1408,17 @@
 </div>
 <hr />
 <h2 id="the-model-in-one-diagram">The Model in One Diagram<a class="headerlink" href="#the-model-in-one-diagram" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Human authors                    AI agents build
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>─────────────────────────        ──────────────────────────────────
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>contracts/slas/              →   observability/slos/ + alerts/
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>contracts/event-schemas/     →   services/*/src/domain/events/
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>contracts/domain-invariants/ →   services/*/src/domain/ (aggregates)
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>docs/adrs/                   →   services/ + infrastructure/
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>ai-agents/tasks/agent/       →   everything in services/, infrastructure/
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>tooling/service-manifest.yaml→   tooling/*.py / *.sh (scripts)
-</span></code></pre></div>
-<p>This is not automation for its own sake. It is a deliberate separation: humans hold accountability for correctness; agents handle volume and consistency.</p>
+<pre class="mermaid"><code>flowchart LR
+    H(["① Human Domain Expert\naccountable for correctness"])
+    C["Contracts\n──────────────\nSLA targets\nDomain invariants\nEvent schemas\nADRs · task specs"]
+    A(["AI Agents ②–⑥\naccountable for volume\n──────────────\nDocumentation · Script Authoring\nScript Executor · Implementation\nCompliance"])
+    I["Implementation\n──────────────\nService code + tests\nInfra manifests · CI pipelines\nObservability artifacts"]
+
+    H --&gt;|"authors"| C
+    C --&gt;|"constrains"| A
+    A --&gt;|"produces"| I
+    A -. "CCR: contract challenge" .-&gt; H</code></pre>
+<p>Humans author <em>contracts</em> — the precise, versioned expression of business intent. Agents implement from those contracts. An agent that drifts from a contract produces a defect traceable to a missing or ambiguous contract, not to the agent itself. When technical reality makes a contract too costly to honour, agents surface a Contract Challenge Report — the only documented path back to amending a human-authored contract.</p>
 <hr />
 <h2 id="see-it-in-practice">See It In Practice<a class="headerlink" href="#see-it-in-practice" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/naren-chakraview/chakraview-enterprise-modernization">chakraview-enterprise-modernization</a> used all 6 personas to modernise a Java EE monolith to cloud-native microservices. Read <a href="https://naren-chakraview.github.io/chakraview-enterprise-modernization/how-this-was-built/">how it was built</a>.</p>
