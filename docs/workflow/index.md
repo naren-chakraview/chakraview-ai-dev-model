@@ -49,6 +49,13 @@ flowchart TD
 
     FEEDBACK["FEEDBACK ARC — signals re-enter as new business intent<br/><br/>SLA breach alert → Intake Round 1<br/>Contract change detected → Phase 0 direct<br/>New bounded context → full intake dialogue<br/>Compliance review failure → Intake Round 1"]
 
+    CCR["CONTRACT CHALLENGE REPORT — Loop C<br/><br/>Any agent, any phase<br/>Trigger: contract is technically costly or complex to honor<br/><br/>Output: ai-agents/reviews/ccr-{service}-{date}.md<br/><br/>Routing: Agent halts on affected contract<br/>Human Expert → Product/business owner<br/>RELAX: amend contract → re-enter Phase 0<br/>HOLD: write hold ADR → resume originating phase"]
+
+    CCRD{"Relax or Hold?"}
+
+    CCR_RELAX["Amend contract<br/>Re-enter Phase 0"]
+    CCR_HOLD["Write hold ADR<br/>Resume originating phase"]
+
     INTAKE -->|New feature / service| P0
     INTAKE -.->|Observability gap| P2
     INTAKE -.->|Infra / CI change| P4
@@ -72,4 +79,14 @@ flowchart TD
 
     P6 --> P7 --> P7B --> FEEDBACK
     FEEDBACK -->|re-enters as next intent| INTAKE
+
+    P3 --"Loop A: API contract reveals domain model gap<br/>Phase 3 pauses"--> P1
+    P5 --"Loop B: Implementation changes SLO assumptions<br/>Phase 5 pauses"--> P2
+    P1 -.->|"Loop C"| CCR
+    P3 -.->|"Loop C"| CCR
+    P5 -.->|"Loop C"| CCR
+    CCR --> CCRD
+    CCRD -->|RELAX| CCR_RELAX
+    CCRD -->|HOLD| CCR_HOLD
+    CCR_RELAX --> P0
 ```
