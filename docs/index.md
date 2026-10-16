@@ -59,18 +59,20 @@ This framework makes that contract explicit. Humans author *contracts* — preci
 
 ## The Model in One Diagram
 
-```
-Human authors                    AI agents build
-─────────────────────────        ──────────────────────────────────
-contracts/slas/              →   observability/slos/ + alerts/
-contracts/event-schemas/     →   services/*/src/domain/events/
-contracts/domain-invariants/ →   services/*/src/domain/ (aggregates)
-docs/adrs/                   →   services/ + infrastructure/
-ai-agents/tasks/agent/       →   everything in services/, infrastructure/
-tooling/service-manifest.yaml→   tooling/*.py / *.sh (scripts)
+```mermaid
+flowchart LR
+    H(["① Human Domain Expert\naccountable for correctness"])
+    C["Contracts\n──────────────\nSLA targets\nDomain invariants\nEvent schemas\nADRs · task specs"]
+    A(["AI Agents ②–⑥\naccountable for volume\n──────────────\nDocumentation · Script Authoring\nScript Executor · Implementation\nCompliance"])
+    I["Implementation\n──────────────\nService code + tests\nInfra manifests · CI pipelines\nObservability artifacts"]
+
+    H -->|"authors"| C
+    C -->|"constrains"| A
+    A -->|"produces"| I
+    A -. "CCR: contract challenge" .-> H
 ```
 
-This is not automation for its own sake. It is a deliberate separation: humans hold accountability for correctness; agents handle volume and consistency.
+Humans author *contracts* — the precise, versioned expression of business intent. Agents implement from those contracts. An agent that drifts from a contract produces a defect traceable to a missing or ambiguous contract, not to the agent itself. When technical reality makes a contract too costly to honour, agents surface a Contract Challenge Report — the only documented path back to amending a human-authored contract.
 
 ---
 
