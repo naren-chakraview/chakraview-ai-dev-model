@@ -90,3 +90,6 @@ flowchart TD
     CCRD -->|HOLD| CCR_HOLD
     CCR_RELAX --> P0
 ```
+
+!!! note "Loop C — HOLD path"
+    When the outcome is HOLD, the agent resumes from the phase that raised the CCR (P1, P3, or P5 — whichever issued it). The diagram shows HOLD as a terminal node because the resume destination is the dynamic originating phase, not a fixed next step.
