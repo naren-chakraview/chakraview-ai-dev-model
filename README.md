@@ -55,4 +55,4 @@ templates/
 
 [chakraview-enterprise-modernization](https://github.com/naren-chakraview/chakraview-enterprise-modernization) — modernising a Java EE monolith to cloud-native microservices using all 6 personas.
 
-Read the case study: [How That Project Was Built](https://naren-chakraview.github.io/chakraview-enterprise-modernization/how-this-was-built/)
+Read the case study: [How That Project Was Built](https://naren-chakraview.github.io/enterprise-modernization/how-this-was-built/)

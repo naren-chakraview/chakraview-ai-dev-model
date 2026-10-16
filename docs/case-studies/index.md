@@ -17,6 +17,6 @@ description: Projects built using the Chakraview AI Dev Model.
 - 4 service implementations built from contracts by Persona 5
 - Zero contract violations at merge time for all services (Persona 6 compliance gate)
 
-**Read more:** [How This Project Was Built](https://naren-chakraview.github.io/chakraview-enterprise-modernization/how-this-was-built/)
+**Read more:** [How This Project Was Built](https://naren-chakraview.github.io/enterprise-modernization/how-this-was-built/)
 
 **Repository:** [github.com/naren-chakraview/chakraview-enterprise-modernization](https://github.com/naren-chakraview/chakraview-enterprise-modernization)

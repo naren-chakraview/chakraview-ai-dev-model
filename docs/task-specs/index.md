@@ -114,10 +114,10 @@ phase:    <workflow phase number (0–6)>
 - **RELAX**: amend the contract, re-enter Phase 0
 - **HOLD**: write an ADR explaining why the contract stands, resume from originating phase
 
-See: [CCR Threshold Rule ADR](../adrs/adr-ccr-threshold.md) · Template: [`templates/agent-tasks/contract-challenge.md`](../templates/)
+See: [CCR Threshold Rule ADR](../adrs/adr-ccr-threshold.md) · Template: [`templates/agent-tasks/contract-challenge.md`](https://github.com/naren-chakraview/chakraview-ai-dev-model/tree/main/templates)
 
 ---
 
 ## Templates
 
-Ready-to-use parameterised templates for all task types: [`templates/`](../templates/)
+Ready-to-use parameterised templates for all task types: [`templates/`](https://github.com/naren-chakraview/chakraview-ai-dev-model/tree/main/templates)

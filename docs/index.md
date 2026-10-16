@@ -66,7 +66,7 @@ Humans author *contracts* — the precise, versioned expression of business inte
 
     Parameterised task spec templates for all agent and script tasks. Drop them in, fill in your domain specifics, and run.
 
-    [:octicons-arrow-right-24: Browse Templates](../templates/)
+    [:octicons-arrow-right-24: Browse Templates](https://github.com/naren-chakraview/chakraview-ai-dev-model/tree/main/templates)
 
 </div>
 
@@ -74,4 +74,4 @@ Humans author *contracts* — the precise, versioned expression of business inte
 
 ## See It In Practice
 
-[chakraview-enterprise-modernization](https://github.com/naren-chakraview/chakraview-enterprise-modernization) used all 6 personas to modernise a Java EE monolith to cloud-native microservices. Read [how it was built](https://naren-chakraview.github.io/chakraview-enterprise-modernization/how-this-was-built/).
+[chakraview-enterprise-modernization](https://github.com/naren-chakraview/chakraview-enterprise-modernization) used all 6 personas to modernise a Java EE monolith to cloud-native microservices. Read [how it was built](https://naren-chakraview.github.io/enterprise-modernization/how-this-was-built/).
